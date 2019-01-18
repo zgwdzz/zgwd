@@ -10,4 +10,10 @@ class Users(models.Model):
     head_url=models.CharField(max_length=100) 
 
     status=models.IntegerField(default=0)   
-    addtime=models.DateTimeField(auto_now_add=True)   
+    addtime=models.DateTimeField(auto_now_add=True)  
+
+
+class Cates(models.Model):
+    name=models.CharField(max_length=50)
+    upid=models.IntegerField()
+    paths=models.CharField(max_length=50)
