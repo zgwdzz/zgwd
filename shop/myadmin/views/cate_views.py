@@ -45,7 +45,26 @@ def addcate(request):
 
 def catelist(request):
     cates = tab()
-    p=Paginator(cates,10)
+
+    types = request.GET.get('type')
+    # 接受关键字
+    search = request.GET.get('search')
+    # 判断用是否搜索内容
+    if types:
+        if types=='all':
+            #根据id username phone
+            # select * from myadmin_users where id like %search% or username like %search% or phone like %search%
+            from django.db.models import Q
+
+            cates = models.Cates.objects.filter(Q(id__contains=search)|Q(name__contains=search)|Q(upid__contains=search)|Q(paths__contains=search))
+        elif types=='name':
+            cates = models.Cates.objects.filter(name__contains=search)
+        elif types=='upid':
+            cates = models.Cates.objects.filter(upid__contains=search)
+        elif types == 'paths':
+            cates = models.Cates.objects.filter(paths__contains=search)
+
+    p=Paginator(cates,10 )
     sumpage=p.num_pages
     page=int(request.GET.get('p',1))
     page1=p.page(page)
