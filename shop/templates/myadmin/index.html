@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <link rel="icon" type="image/png" href="/static/myadmin/i/favicon.png">
+    <link rel="icon" type="image/png" href="">
     <link rel="apple-touch-icon-precomposed" href="/static/myadmin/i/app-icon72x72@2x.png">
     <meta name="apple-mobile-web-app-title" content="Amaze UI" />
     <script src="/static/myadmin/js/echarts.min.js"></script>
@@ -200,7 +200,7 @@
             </div>
 
             <!-- 菜单 -->
-            <ul class="sidebar-nav">
+            <ul class="sidebar-nav zgwd">
                 <li class="sidebar-nav-link">
                     <a href="{% url 'myadmin_index' %}" class="active">
                         <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
@@ -247,9 +247,43 @@
                        
                     </ul>
                 </li>
+                <li class="sidebar-nav-link">
+                    <a href="javascript:;" class="sidebar-nav-sub-title">
+                        <i class="am-icon-table sidebar-nav-link-logo"></i> 商品管理
+                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-nav-sub">
+                        <li class="sidebar-nav-link">
+                            <a href="{% url 'myadmin_goodslist' %}">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商品列表
+                            </a>
+                        </li>
+                        <li class="sidebar-nav-link">
+                            <a href="{% url 'myadmin_addgoods' %}">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 添加商品
+                            </a>
+                        </li>
+
+                       
+                    </ul>
+                  
+                </li>
                
             </ul>
         </div>
+        <script type="text/javascript">
+            $('.zgwd li').each(function(){
+                if(location.href.indexOf(this.href)===0){
+                    $(this).addClass('active')
+                }
+            })
+                
+               
+                
+            
+
+
+        </script>
 
 
         <!-- 内容区域 -->

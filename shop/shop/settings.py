@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myhome',
-    'myadmin'
+    'myadmin',
+    'ueditor'
 ]
 
 MIDDLEWARE = [
