@@ -5,11 +5,46 @@ from django.core.urlresolvers import reverse
 from myadmin import models
 # Create your views here.
 def index(request):
+    cate=models.Cates.objects.all()
+    goods=models.Goods.objects.all()
+    countnet={'cate':cate,'goods':goods}
+    return render(request,'myhome/index.html',countnet)
+
+
+
     return render(request,'myhome/index.html')
+
 
 # 登录
 def myhome_login(request):
-    return render(request,'myhome/login.html')
+    if request.method=="POST":
+        info=request.POST.dict()
+
+        try:
+            user=models.Users.objects.get(phone=info['phone'])
+            upass=check_password(info['password'],user.password)
+            if upass:
+                request.session['userinfo']={'vipuser':user.username,'uid':user.id}
+                return HttpResponse('<script>alert("登陆成功");location.href="'+reverse('myhome_index')+'"</script>')
+            else:
+                return HttpResponse('<script>alert("账号或者密码不正确");history.back(-1)</script>')
+        except:
+            return HttpResponse('<script>alert("账号或者密码不正确");history.back(-1)</script>')
+
+    elif request.method=="GET":
+
+        return render(request,'myhome/login.html')
+
+
+# 退出登录
+def myhome_outlogin(request):
+    del request.session['userinfo']
+    return HttpResponse('<script>alert("退出成功");location.href="'+reverse('myhome_index')+'"</script>')
+
+    
+
+
+
 # 注册
 def myhome_register(request):
     if request.method == 'GET':
@@ -47,7 +82,7 @@ def myhome_register(request):
 
 
         
-
+# 发送信息
 def sendmsg(request):
     
     #接口类型：互亿无线触发短信接口，支持发送验证码短信、订单通知短信等。
@@ -82,3 +117,7 @@ def sendmsg(request):
     print(res)
     # return HttpResponse(res)
     return JsonResponse(res)
+
+
+def myhome_usinfo(request):
+    return render(request,'myhome/usinfo.html')

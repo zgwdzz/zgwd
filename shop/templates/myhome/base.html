@@ -34,7 +34,7 @@
       <div class="container clearfix">
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <div class="layout-header-logo navbar-left">
-              <a target="_blank" href="/static/myhome/index.html" class="layout-header-logo-link" alt="魅族科技">
+              <a  href="{% url 'myhome_index' %}" class="layout-header-logo-link" alt="魅族科技">
                 <img src="/static/myhome/public/img/logo.png">
               </a>
           </div>
@@ -45,12 +45,21 @@
                 </a>
                 <div class="layout-user-downmenu">
                   <ul class="layout-user-downmenu-list">
+                    {% if request.session.userinfo %}
                     <li class="layout-user-downmenu-item">
-                      <a href="login.html" class="layout-user-downmenu-link">立即登录</a>
+                      <a href="{% url 'myhome_outlogin' %}" class="layout-user-downmenu-link">退出登录</a>
                     </li>
                     <li class="layout-user-downmenu-item">
-                      <a href="register.html" target="_blank" class="layout-user-downmenu-link" data-mtype="wmz_public_grzx_register">立即注册</a>
+                      <a href="{% url 'myhome_usinfo' %}"  class="layout-user-downmenu-link" data-mtype="wmz_public_grzx_register">个人中心</a>
                     </li>
+                    {% else %}
+                     <li class="layout-user-downmenu-item">
+                      <a href="{% url 'myhome_login' %}" class="layout-user-downmenu-link">立即登录</a>
+                    </li>
+                    <li class="layout-user-downmenu-item">
+                      <a href="{% url 'myhome_register' %}"  class="layout-user-downmenu-link" data-mtype="wmz_public_grzx_register">立即注册</a>
+                    </li>
+                    {% endif %}
                     <li class="layout-user-downmenu-item">
                       <a href="#" class="layout-user-downmenu-link" data-mtype="wmz_public_grzx_myorder">我的订单</a>
                     </li>
@@ -71,14 +80,16 @@
             <li class="layout-header-nav-item">
               <a href="/static/myhome/index.html" class="layout-header-nav-link">魅族商城 </a><p class="line-top hidden-xs"></p>
             </li>
-            <li class="layout-header-nav-item">
-              <a href="/static/myhome/list.html" class="layout-header-nav-link">魅族手机</a>
-            </li>
-            <li class="layout-header-nav-item"><a href="/static/myhome/list.html" class="layout-header-nav-link">魅蓝手机</a></li>
-            <li class="layout-header-nav-item"><a href="/static/myhome/list.html" class="layout-header-nav-link">魅族声学</a></li>
-            <li class="layout-header-nav-item"><a href="#" class="layout-header-nav-link">智能·配件</a></li>
-            <li class="layout-header-nav-item"><a href="#" class="layout-header-nav-link">服务</a></li>
-            <li class="layout-header-nav-item"><a href="#" class="layout-header-nav-link">专卖店</a></li>
+            {%  comment  %}
+            {% for cate1 in cate %}
+            {% if cate1.upid == 0 %}
+            <li class="layout-header-nav-item"><a href="/static/myhome/list.html" class="layout-header-nav-link">{{cate1.name}}</a></li>
+            {% endif %}
+            {% endfor %}
+            {%  endcomment  %}
+            {% load tags %}
+            {% nav  %}
+            
             <li class="layout-header-nav-item"><a href="#" class="layout-header-nav-link">Flyme</a></li>
             <li class="layout-header-nav-item"><a href="#" class="layout-header-nav-link">社区</a></li>                          
           </ul>           
