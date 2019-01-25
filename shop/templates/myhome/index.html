@@ -98,7 +98,7 @@
               {% for g in goods %}
               <!-- 判断当前分类下的商品 -->
               {% if g.cateid.id == cate2.id %}
-              <a class="home-category-child-item" href="#" target="_blank" >
+              <a class="home-category-child-item" href="{% url 'myhome_info' %}?gid={{g.id}}"  >
                 <img class="home-category-child-img" src="{{g.g_url}}" height="40" width="40">
                 <div class="home-category-child-text">{{g.title}}</div>
               </a>
@@ -414,6 +414,7 @@
                 
                 {% if g.cateid.id == 69 or g.cateid.id == 70 %}
                 <li class="home-product ">
+                <a href="{% url 'myhome_info' %}?gid={{g.id}}">
                   <div class="">
                     <img src="{{g.g_url}}" class="home-product-img">
                     <div class="caption">
@@ -423,12 +424,13 @@
                                  累计超18000台
                       </h6>
                       <p class="home-product-bottom">
-                        <span class="home-product-price">2880
+                        <span class="home-product-price">{{g.price}}
                            <span class="home-product-start-tag">起</span> 
                         </span>
                     </p>
                    </div>
                   </div>
+                  </a>
                 </li>
                 {% endif %}
                 
@@ -477,6 +479,7 @@
                 
                     {% if g.cateid.id == 71 or g.cateid.id == 72 %}
                     <li class="home-product">
+                    <a href="{% url 'myhome_info' %}?gid={{g.id}}">
                       <div class="">
                         <img src="{{g.g_url}}" class="home-product-img">
                         <div class="caption">
@@ -486,12 +489,13 @@
                                      累计超18000台
                           </h6>
                           <p class="home-product-bottom">   
-                            <span class="home-product-price">999
+                            <span class="home-product-price">{{g.price}}
                             </span>
-                            <span class="home-product-price origin">1099</span>         
+                                  
                           </p>
                        </div>
                       </div>
+                      </a>
                     </li>
                     {% endif %}
                     {% endfor %}

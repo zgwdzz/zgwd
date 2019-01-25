@@ -35,7 +35,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <div class="layout-header-logo navbar-left">
               <a  href="{% url 'myhome_index' %}" class="layout-header-logo-link" alt="魅族科技">
-                <img src="/static/myhome/public/img/logo.png">
+                <img src="/static/pics/1548058812.8636365.jpg" width="100" >
               </a>
           </div>
           <ul class="nav navbar-nav navbar-right layout-header-service clearfix">
@@ -70,7 +70,7 @@
                 </div>
             </li>
             <li class="layout-header-service-item layout-header-service-cart" id="layoutHeaderCart">
-                <a class="layout-header-service-link" href="#" data-mtype="wmz_public_yt_cart">
+                <a class="layout-header-service-link" href="{% url 'myhome_carpage' %}" data-mtype="wmz_public_yt_cart">
                     <i class="glyphicon glyphicon-shopping-cart"></i>
                     <span class="layout-header-service-cart-num">0</span>
                 </a>
@@ -78,7 +78,7 @@
           </ul>
           <ul class="nav navbar-nav navbar-right layout-header-nav clearfix">
             <li class="layout-header-nav-item">
-              <a href="/static/myhome/index.html" class="layout-header-nav-link">魅族商城 </a><p class="line-top hidden-xs"></p>
+              <a href="{% url 'myhome_index' %}" class="layout-header-nav-link">魅族商城 </a><p class="line-top hidden-xs"></p>
             </li>
             {%  comment  %}
             {% for cate1 in cate %}
@@ -98,7 +98,7 @@
       </div>
      <!-- /.container-fluid -->
      <!-- 鼠标经过出现内容 -->
-     <div class="layout-header-nav-child">
+     <!-- <div class="layout-header-nav-child">
        <div class="container">
          <ul class="layout-header-nav-child-list first" >
            <li class="layout-header-nav-child-item">
@@ -169,7 +169,7 @@
            
          </ul>
        </div>
-     </div>
+     </div> -->
     </nav>
   </div><!-- 导航 E--> 
 {% endblock %}

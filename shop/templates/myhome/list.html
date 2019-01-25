@@ -112,7 +112,7 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                   <div role="tabpanel" class="tab-pane active mod-pic" id="list-p1">
-                    <a href="/static/myhome/meilanx.html">
+                    <a href="{% url 'myhome_info' %}?gid={{g.id}}">
                       <img class="lazy j-modProduct" src="{{g.g_url}}" width="220" height="220">
                     </a>
                   </div>
@@ -127,7 +127,7 @@
 
                 <h2>{{g.title}}</h2>
                 <h3 class="red" title="现货速发  双瞳如小窗 佳景观历历">
-                现货速发  双瞳如小窗 佳景观历历
+                现货速发  双瞳如小窗 大灯真亮
                 </h3>
                 <dd class="mod-price">
                     <span>￥</span>
@@ -174,7 +174,7 @@
                   </div>
                   <div class="mod-desc">
                       <h4 class="vm-title">魅蓝 5s </h4>
-                      <h6 class="vm-subtitle" title="32G版限量赠壳膜">32G版限量赠壳膜</h6>
+                      <h6 class="vm-subtitle" title="32G版限量赠壳膜"></h6>
                       <p class="vm-price">
                           <span>¥</span><span class="vm-price-text">999</span>
                       </p>

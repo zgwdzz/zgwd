@@ -32,3 +32,12 @@ class Goods(models.Model):
     addtime = models.DateTimeField(auto_now_add=True)
 
     cateid=models.ForeignKey(to="Cates",to_field="id")
+
+
+
+
+class Car(models.Model):
+    # id gid num uid
+    gid=models.ForeignKey(to="Goods",to_field="id")
+    num = models.IntegerField()
+    uid=models.ForeignKey(to="Users",to_field="id")

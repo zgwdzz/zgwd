@@ -17,7 +17,17 @@ urlpatterns = [
 
     url(r'^info/$', info_views.myhome_info,name='myhome_info'),
 
+    # 个人详情
     url(r'^usinfo/$', index_views.myhome_usinfo,name='myhome_usinfo'),
+
+
+    # 购物车
+    url(r'^addcar/$', info_views.addcar,name='myhome_car'),
+    url(r'^carpage/$', info_views.carpage,name='myhome_carpage'),
+    url(r'^caredit/$', info_views.caredit,name='myhome_caredit'),
+    url(r'^delcar/$', info_views.delcar,name='myhome_delcar'),
+
+
 
     
 
