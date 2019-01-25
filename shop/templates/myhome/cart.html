@@ -239,14 +239,14 @@
         //删除
         $('.delcar').click(function(){
             var cid=$(this).attr('cid')
-            var num=Number($(this).next().find('input').val())
+            var num=Number($(this).parents('tr').find('.val').val())
            
             delcar(cid)
-            sendnum(num,cid)
            
-            total()
+            
             $(this).parents('tr').remove()
-            $(this).prev().find('input').val(num)
+            total()
+            
 
 
         })
