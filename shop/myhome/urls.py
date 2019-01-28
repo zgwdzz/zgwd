@@ -18,7 +18,13 @@ urlpatterns = [
     url(r'^info/$', info_views.myhome_info,name='myhome_info'),
 
     # 个人详情
-    url(r'^usinfo/$', index_views.myhome_usinfo,name='myhome_usinfo'),
+    url(r'^information/$', index_views.myhome_information,name='myhome_information'),
+    url(r'^order/$', index_views.myhome_order,name='myhome_order'),
+    url(r'^infoindex/$', index_views.myhome_infoindex,name='myhome_infoindex'),
+
+
+    
+
 
 
     # 购物车
@@ -26,6 +32,18 @@ urlpatterns = [
     url(r'^carpage/$', info_views.carpage,name='myhome_carpage'),
     url(r'^caredit/$', info_views.caredit,name='myhome_caredit'),
     url(r'^delcar/$', info_views.delcar,name='myhome_delcar'),
+    
+    url(r'^confirm/$', info_views.confirm,name='myhome_confirm'),
+    url(r'^getcitys/$', info_views.getcitys,name='myhome_getcitys'),
+    url(r'^saveaddress/$', info_views.saveaddress,name='myhome_saveaddress'),
+    url(r'^createorder/$', info_views.createorder,name='myhome_createorder'),
+
+
+ 
+
+
+
+
 
 
 

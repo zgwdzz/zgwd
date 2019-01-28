@@ -110,7 +110,7 @@
 								<!-- 图片 -->
 								<td class="cart-col-select col-md-3 col-xs-4 col-sm-4">  
 									
-										<input class="mz-checkbox inp" type="checkbox" name="">
+										<input class="mz-checkbox inp" type="checkbox" name="" cid="{{cinfo.id}}">
 									
 
 									<a href="meilanx.html" class="cart-product-link" target="_blank">
@@ -276,9 +276,12 @@
         $('.inp').change(function(){
             total()
         })
+
+        // 计算总数量和总价格
         function total(){
             var gnum=0
             var gprice=0
+            var cartid = []
             // 判断那些是选中的
             $('.inp').each(function(){
                 // 判断有没有选中
@@ -287,16 +290,28 @@
                      gnum+=Number($(this).parents('tr').find('.val').val())
                      gprice+=Number($(this).parents('tr').find('.total').text())
 
+                     cartid.push($(this).attr('cid'))
 
                 }else{
                     $('.col').prop('checked',false)
                 }
             })
-            console.log(gnum,gprice)
+            
             // 写入对应的位置
             $('#totalPrice').html(gprice)
             $('#totalCount').html(gnum)
+
+            return cartid
         }
+        // 单机页面进行跳转
+        $('#cartSubmit').click(function(){
+            var cartid=total()
+            if(cartid.length==0){
+                alert('请选择商品')
+            }else{
+                location.href='{% url 'myhome_confirm' %}?cid='+cartid
+            }
+        })
 
 
 	</script>

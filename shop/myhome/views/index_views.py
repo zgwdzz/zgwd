@@ -12,7 +12,7 @@ def index(request):
 
 
 
-    return render(request,'myhome/index.html')
+    
 
 
 # 登录
@@ -119,5 +119,54 @@ def sendmsg(request):
     return JsonResponse(res)
 
 
-def myhome_usinfo(request):
-    return render(request,'myhome/usinfo.html')
+def myhome_infoindex(request):
+    oinfo=request.GET.dict()
+    uid = request.session.get('userinfo')
+    if not uid:
+        return HttpResponse('<script>alert("没有登录");location.href="'+reverse('myhome_login')+'"</script>')
+    user = models.Users.objects.get(id=uid['uid'])
+    # 根据外建查询用户购物车里有多少商品
+    oinfo['phone'] = user.phone
+    
+    return render(request,'myhome/infoindex.html',{'oinfo':oinfo}) 
+
+
+
+
+def myhome_information(request):
+    if request.method == 'GET':
+        oinfo=request.GET.dict()
+        uid = request.session.get('userinfo')
+        if not uid:
+            return HttpResponse('<script>alert("没有登录");location.href="'+reverse('myhome_login')+'"</script>')
+        user = models.Users.objects.get(id=uid['uid'])
+        # 根据外建查询用户购物车里有多少商品
+        oinfo['phone'] = user.phone 
+        oinfo['username'] = user.username
+        oinfo['age'] = user.age 
+        oinfo['sex'] = user.sex 
+       
+        return render(request,'myhome/information.html',{'oinfo':oinfo})
+
+    elif request.method == 'POST':
+        uid = request.session.get('userinfo')
+        oinfo=request.POST.dict()
+        user = models.Users.objects.get(id=uid['uid'])
+        user.username=oinfo['username']
+        user.age=oinfo['age']
+        user.phone=oinfo['phone']
+        user.sex=oinfo['sex']
+        user.save()
+
+
+        return HttpResponse('<script>alert("修改成功");location.href="'+reverse('myhome_information')+'"</script>')
+
+def myhome_order(request):
+    oinfo=request.GET.dict()
+    uid = request.session.get('userinfo')
+    if not uid:
+        return HttpResponse('<script>alert("没有登录");location.href="'+reverse('myhome_login')+'"</script>')
+    return render(request,'myhome/order.html') 
+
+
+
