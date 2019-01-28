@@ -181,7 +181,7 @@
                         <li class="td td-item">
                           <div class="item-pic">
                             <a href="#" class="J_MakePoint">
-                              <img src="/static/myhome/images/kouhong.jpg_80x80.jpg" class="itempic J_ItemImg"></a>
+                              <img src="{{i.gid.g_url}}" class="itempic J_ItemImg" width="100"></a>
                           </div>
                           <div class="item-info">
                             <div class="item-basic-info">
@@ -326,6 +326,9 @@
                         {% for i in  address %}
                         {% if i.isselect == 1 %}
                         <input type="hidden" name="dizhi" class="dizhi" value="{{i.id}}">
+                        {% else %}
+                        <input type="hidden" name="dizhi" class="dizhi" value="">
+
                         {% endif %}
                         {% endfor %}
                         <input type="hidden" name="car" class="car" value="{{request.GET.cid}}">
@@ -495,17 +498,31 @@
         // 获取物流
         $('.OP_LOG_BTN').click(function(){
           var wl = $(this).attr('wid')
-          $('.wuliu').val(wl)
+          if($('.wuliu').hasClass("selected")){
+            $('.wuliu').val()=""
+          }else{
+            $('.wuliu').val(wl)
+          }
+          
         })
 
         // 支付方式
         $('.pay').click(function(){
           var paytype = $(this).attr('pay')
-          $('.zhifu').val(paytype)
+          if($('.zhifu').hasClass("selected")){
+            $('.zhifu').val()=""
+          }else{
+            $('.zhifu').val(paytype)
+          }
+          
         })
 
         // 提交订单
         $('#J_Go').click(function(){
+          if(!$('.dizhi').val()){
+            alert('请选择地址')
+            return
+          }
           if(!$('.wuliu').val()){
             alert('请选择物流信息')
             return

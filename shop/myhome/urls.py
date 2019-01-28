@@ -21,6 +21,8 @@ urlpatterns = [
     url(r'^information/$', index_views.myhome_information,name='myhome_information'),
     url(r'^order/$', index_views.myhome_order,name='myhome_order'),
     url(r'^infoindex/$', index_views.myhome_infoindex,name='myhome_infoindex'),
+    url(r'^delorder/$', index_views.myhome_delorder,name='myhome_delorder'),
+
 
 
     

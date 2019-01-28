@@ -125,7 +125,7 @@ def myhome_infoindex(request):
     if not uid:
         return HttpResponse('<script>alert("没有登录");location.href="'+reverse('myhome_login')+'"</script>')
     user = models.Users.objects.get(id=uid['uid'])
-    # 根据外建查询用户购物车里有多少商品
+   
     oinfo['phone'] = user.phone
     
     return render(request,'myhome/infoindex.html',{'oinfo':oinfo}) 
@@ -140,6 +140,7 @@ def myhome_information(request):
         if not uid:
             return HttpResponse('<script>alert("没有登录");location.href="'+reverse('myhome_login')+'"</script>')
         user = models.Users.objects.get(id=uid['uid'])
+
         # 根据外建查询用户购物车里有多少商品
         oinfo['phone'] = user.phone 
         oinfo['username'] = user.username
@@ -161,12 +162,49 @@ def myhome_information(request):
 
         return HttpResponse('<script>alert("修改成功");location.href="'+reverse('myhome_information')+'"</script>')
 
+
+
 def myhome_order(request):
     oinfo=request.GET.dict()
     uid = request.session.get('userinfo')
+    count=[]
+    orders=[]
+    goodsinfo=[]
     if not uid:
         return HttpResponse('<script>alert("没有登录");location.href="'+reverse('myhome_login')+'"</script>')
-    return render(request,'myhome/order.html') 
+    user = models.Users.objects.get(id=uid['uid'])
+    
+    # order的ｉｄ
+    order=models.Order.objects.filter(uid=uid['uid'])
+
+    
+    for i in order:
+
+        orderinfo=models.Orderinfo.objects.filter(orderid=i.id)
+        
+        count.append(orderinfo)
+        orders.append(i)
+    
+    for a in count:
+        for b in a:
+            goodsinfo.append(b)
 
 
+
+    return render(request,'myhome/order.html',{'goodsinfo':goodsinfo,'count':count,'orders':orders }) 
+
+
+
+
+def myhome_delorder(request):
+    oinfo=request.GET.dict()
+    
+    oobj=models.Order.objects.get(id=oinfo['cid'])
+    print(oobj,11111)
+    oobj.delete()
+
+    
+
+   
+    return JsonResponse({'error':0,'msg':'删除成功'})
 
