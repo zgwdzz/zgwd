@@ -311,9 +311,9 @@
                       </p>
                       <p class="buy-footer-address">
                         <span class="buy-line-title">收货人：</span>
-                        <span class="buy-address-detail">
-                          <span class="buy-user">{{i.name}}</span>
-                          <span class="buy-phone">{{i.phone}}</span></span>
+                        <span class="buy-address-detail1">
+                          <span class="buy-user1">{{i.name}}</span>
+                          <span class="buy-phone1">{{i.phone}}</span></span>
                       </p>
                     </div>
                     {% endif %}
@@ -430,6 +430,7 @@
           totalprice += Number($(this).text())
         })
         $('.pay-sum').html(totalprice)
+        $('#J_ActualFee').html(totalprice)
 
         // 城际联动
         $('.adds select').change(function(){
@@ -489,7 +490,7 @@
           var address = $(this).find('.buy--address-detail').html()
           
           $('.pay-address').find('.buy--address-detail').html(address)
-          $('.buy-address-detail').html(phone)
+          $('.buy-address-detail1').html(phone)
           
           
 
@@ -498,9 +499,10 @@
         // 获取物流
         $('.OP_LOG_BTN').click(function(){
           var wl = $(this).attr('wid')
-          if($('.wuliu').hasClass("selected")){
-            $('.wuliu').val()=""
+          if($(this).hasClass("selected")){
+            $('.wuliu').val("")
           }else{
+            var wl = $(this).attr('wid')
             $('.wuliu').val(wl)
           }
           
@@ -509,9 +511,10 @@
         // 支付方式
         $('.pay').click(function(){
           var paytype = $(this).attr('pay')
-          if($('.zhifu').hasClass("selected")){
-            $('.zhifu').val()=""
+          if($(this).hasClass("selected")){
+            $('.zhifu').val("")
           }else{
+            var paytype = $(this).attr('pay')
             $('.zhifu').val(paytype)
           }
           

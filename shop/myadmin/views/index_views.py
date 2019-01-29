@@ -3,7 +3,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.http import HttpResponse,JsonResponse
 from django.core.urlresolvers import reverse
 from .. import models
-
+from django.core.paginator import Paginator
 from shop.settings import BASE_DIR
 
 
@@ -78,3 +78,68 @@ def verifycode(request):
     im.save(buf, 'png')
     #将内存中的图片数据返回给客户端，MIME类型为图片png
     return HttpResponse(buf.getvalue(), 'image/png')
+
+
+def orderlist(request):
+    order= models.Order.objects.all()
+    types = request.GET.get('type')
+    # 接受关键字
+    search = request.GET.get('search')
+
+    if types:
+        if types=='id':
+            #根据id username phone
+            # select * from myadmin_users where id like %search% or username like %search% or phone like %search%
+            from django.db.models import Q
+
+            userinfo = models.Order.objects.filter(Q(id__contains=search))
+    
+
+    # 分页
+    p=Paginator(order,3)
+    sumpage=p.num_pages
+    page=int(request.GET.get('p',1))
+    page1=p.page(page)
+    if page<=3:
+        prange=p.page_range[:5]
+    elif page+2>=sumpage:
+        prange=p.page_range[-5:]
+    else:
+        prange=p.page_range[page-3:page+2]
+
+
+    
+    return render(request,'myadmin/orderlist.html',{'order':page1,'prange':prange,'page':page,'sumpage':sumpage})
+    
+
+
+
+
+
+
+
+
+
+
+def editorder(request):
+    oid=request.GET.get('oid')
+    if request.method == 'GET':
+       
+        orderinfo=models.Order.objects.get(id=oid)
+
+        return render(request,'myadmin/editorder.html',{'orderinfo':orderinfo})
+
+    elif request.method == 'POST':
+        
+        neworder=request.POST.dict()
+        orderinfo=models.Order.objects.get(id=oid)
+        orderinfo.total=neworder['total']
+        orderinfo.save()
+
+        return redirect(reverse('myadmin_orderlist'))
+
+def delorder(request):
+    oid = request.GET.get('oid')
+    order = models.Order.objects.get(id=oid)
+    order.delete()
+    return redirect(reverse('myadmin_orderlist'))

@@ -3,6 +3,8 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.http import HttpResponse,JsonResponse
 from django.core.urlresolvers import reverse
 from myadmin import models
+import time,os
+from django.core.paginator import Paginator
 # Create your views here.
 def index(request):
     cate=models.Cates.objects.all()
@@ -69,7 +71,13 @@ def myhome_register(request):
                     # 存数据
                     newuser =models.Users()
                     newuser.username=userinfo['username'] 
-                    newuser.phone=userinfo['phone'] 
+                    newuser.phone=userinfo['phone']
+                    newuser.age=20
+                    newuser.sex=1
+
+
+                    
+
                     newuser.password=make_password(userinfo['password'], None, 'pbkdf2_sha256')
                     newuser.save()
                     return HttpResponse('<script>alert("注册成功，请登录");location.href="'+reverse("myhome_login")+'"</script>')
@@ -98,25 +106,26 @@ def sendmsg(request):
     import json
     import random
     #用户名 查看用户名请登录用户中心->验证码、通知短信->帐户及签名设置->APIID
-    account  = "C12884139" 
+    account  = "C87000499" 
     #密码 查看密码请登录用户中心->验证码、通知短信->帐户及签名设置->APIKEY
-    password = "efcf5e25515b46c7094d7ce36e983fcc"
+    password = "b485a61d820183a8058bf15b717e925b"
     mobile = request.GET.get('phone')
     # 随机验证码
     code = str(random.randint(10000,99999))
     # 把验证码存入session
     request.session['msgcode'] = {'code':code,'phone':mobile}
-    text = "您的验证码是："+code+"。请不要把验证码泄露给其他人。"
-    data = {'account': account, 'password' : password, 'content': text, 'mobile':mobile,'format':'json' }
-    req = urllib.request.urlopen(
-        url= 'http://106.ihuyi.com/webservice/sms.php?method=Submit',
-        data= urllib.parse.urlencode(data).encode('utf-8')
-    )
-    content =req.read()
-    res = json.loads(content.decode('utf-8'))
-    print(res)
+    # text = "您的验证码是："+code+"。请不要把验证码泄露给其他人。"
+    # data = {'account': account, 'password' : password, 'content': text, 'mobile':mobile,'format':'json' }
+    # req = urllib.request.urlopen(
+    #     url= 'http://106.ihuyi.com/webservice/sms.php?method=Submit',
+    #     data= urllib.parse.urlencode(data).encode('utf-8')
+    # )
+    # content =req.read()
+    # res = json.loads(content.decode('utf-8'))
+    # print(res)
     # return HttpResponse(res)
-    return JsonResponse(res)
+    print(code)
+    return JsonResponse({'code':code})
 
 
 def myhome_infoindex(request):
@@ -127,6 +136,10 @@ def myhome_infoindex(request):
     user = models.Users.objects.get(id=uid['uid'])
    
     oinfo['phone'] = user.phone
+    oinfo['username'] = user.username
+    oinfo['head_url'] = user.head_url
+
+
     
     return render(request,'myhome/infoindex.html',{'oinfo':oinfo}) 
 
@@ -146,6 +159,8 @@ def myhome_information(request):
         oinfo['username'] = user.username
         oinfo['age'] = user.age 
         oinfo['sex'] = user.sex 
+        oinfo['head_url'] = user.head_url
+
        
         return render(request,'myhome/information.html',{'oinfo':oinfo})
 
@@ -157,11 +172,34 @@ def myhome_information(request):
         user.age=oinfo['age']
         user.phone=oinfo['phone']
         user.sex=oinfo['sex']
-        user.save()
+        
+
+        file=request.FILES.get('g_url')
+        try:
+
+            if file:
+                os.remove('.'+user.head_url)
+                headurl=upload(file)
+                user.head_url=headurl
+            user.save()
+        except:
+            headurl=upload(file)
+            user.head_url=headurl
+            user.save()
 
 
         return HttpResponse('<script>alert("修改成功");location.href="'+reverse('myhome_information')+'"</script>')
 
+
+
+# 封装的头像上传函数
+def upload(myfile):
+    filename=str(time.time())+"."+myfile.name.split('.').pop()
+    destination=open("./static/pics/"+filename,"wb+")
+    for chunk in myfile.chunks():
+        destination.write(chunk)
+    destination.close()
+    return '/static/pics/'+filename
 
 
 def myhome_order(request):

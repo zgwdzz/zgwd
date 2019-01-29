@@ -268,16 +268,28 @@
                     </ul>
                   
                 </li>
+                <li class="sidebar-nav-link">
+                    <a href="javascript:;" class="sidebar-nav-sub-title">
+                        <i class="am-icon-table sidebar-nav-link-logo"></i> 订单管理
+                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-nav-sub">
+                        <li class="sidebar-nav-link">
+                            <a href="{% url 'myadmin_orderlist' %}">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 订单列表
+                            </a>
+                        </li>
+                        
+
+                       
+                    </ul>
+                  
+                </li>
                
             </ul>
         </div>
         <script type="text/javascript">
-            $('.zgwd li').each(function(){
-                if(location.href.indexOf(this.href)===0){
-                    $(this).addClass('active')
-                }
-            })
-                
+             
                
                 
             

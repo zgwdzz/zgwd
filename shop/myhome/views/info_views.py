@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse,JsonResponse
 from myadmin import models
 from django.core.urlresolvers import reverse
@@ -95,13 +95,21 @@ def saveaddress(request):
     addinfo = request.GET.dict()
     # 存数据
     address = models.Address()
+    address.uid = models.Users.objects.get(id=request.session['userinfo']['uid'])
+    addnum=models.Address.objects.filter(uid=request.session['userinfo']['uid']).count()
+    print(addnum,11111111111111111111111111111111)
+    if addnum == 0:
+        address.isselect = 1
+    else:
+        address.isselect = 0
+
     address.name=addinfo['name']
     address.phone=addinfo['phone']
     address.sheng=models.Citys.objects.get(id=addinfo['sheng']).name
     address.shi=models.Citys.objects.get(id=addinfo['shi']).name
     address.xian=models.Citys.objects.get(id=addinfo['xian']).name
     address.addinfo=addinfo['addinfo']
-    address.uid = models.Users.objects.get(id=request.session['userinfo']['uid'])
+    
     address.save()
     return JsonResponse({'error':0,'msg':'添加成功'})
 
@@ -146,4 +154,4 @@ def createorder(request):
 
 
 
-    return HttpResponse('ok')
+    return HttpResponse('<script>alert("提交成功");location.href="'+reverse('myhome_order')+'"</script>')

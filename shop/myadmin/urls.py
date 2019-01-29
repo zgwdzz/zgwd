@@ -30,6 +30,14 @@ urlpatterns = [
     url(r'^outlogin/$', index_views.outlogin,name='myadmin_out'),
 
 
+    url(r'^order/$', index_views.orderlist,name='myadmin_orderlist'),
+    url(r'^editorder/$', index_views.editorder,name='myadmin_editorder'),
+    url(r'^delorder/$', index_views.delorder,name='myadmin_delorder'),
+
+
+
+
+
 
 
 
