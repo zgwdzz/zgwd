@@ -43,6 +43,9 @@ urlpatterns = [
     url(r'^getcitys/$', info_views.getcitys,name='myhome_getcitys'),
     url(r'^saveaddress/$', info_views.saveaddress,name='myhome_saveaddress'),
     url(r'^createorder/$', info_views.createorder,name='myhome_createorder'),
+    url(r'^deladdress/$', info_views.deladdress,name='myhome_deladdress'),
+
+    
 
 
  

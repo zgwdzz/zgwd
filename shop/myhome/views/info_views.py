@@ -155,3 +155,14 @@ def createorder(request):
 
 
     return HttpResponse('<script>alert("提交成功,请去个人中心订单管理页面支付");location.href="'+reverse('myhome_order')+'"</script>')
+
+
+
+def deladdress(request):
+    aid=request.GET.get('aid')
+    print(aid,11111111111111111)
+
+    address=models.Address.objects.get(id=aid)
+    address.delete()
+
+    return JsonResponse({'error':0,'msg':'删除成功'})
