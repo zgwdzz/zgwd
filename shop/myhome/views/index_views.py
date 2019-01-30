@@ -233,6 +233,23 @@ def myhome_order(request):
 
 
 
+def myhome_orderinfo(request):
+    oid=request.GET.dict()
+    uid=request.session.get('userinfo')
+    
+
+    oinfo=models.Order.objects.filter(id=oid['orid'])
+
+    for i in oinfo:
+        oinfos=models.Orderinfo.objects.filter(orderid=i.id)
+   
+      
+    return render(request,'myhome/orderinfo.html',{'oinfo':oinfo,'oinfos':oinfos})
+
+
+
+
+
 
 def myhome_delorder(request):
     oinfo=request.GET.dict()
@@ -245,4 +262,15 @@ def myhome_delorder(request):
 
    
     return JsonResponse({'error':0,'msg':'删除成功'})
+
+
+
+def myhome_pay(request):
+    payid=request.GET.dict()
+    payinfo=models.Order.objects.get(id=payid['cid'])
+    payinfo.status=1
+    payinfo.save()
+    return JsonResponse({'error':0,'msg':'支付成功'})
+
+
 

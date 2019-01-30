@@ -92,7 +92,7 @@ def orderlist(request):
             # select * from myadmin_users where id like %search% or username like %search% or phone like %search%
             from django.db.models import Q
 
-            userinfo = models.Order.objects.filter(Q(id__contains=search))
+            order = models.Order.objects.filter(Q(id__contains=search))
     
 
     # 分页

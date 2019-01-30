@@ -154,4 +154,4 @@ def createorder(request):
 
 
 
-    return HttpResponse('<script>alert("提交成功");location.href="'+reverse('myhome_order')+'"</script>')
+    return HttpResponse('<script>alert("提交成功,请去个人中心订单管理页面支付");location.href="'+reverse('myhome_order')+'"</script>')
