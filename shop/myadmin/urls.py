@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from django.contrib import admin
-from .views import index_views,user_views,cate_views,goods_views
+from .views import index_views,user_views,cate_views,goods_views,authviews
 urlpatterns = [
     #路由 
     url(r'^$', index_views.index,name='myadmin_index'),
@@ -33,6 +33,20 @@ urlpatterns = [
     url(r'^order/$', index_views.orderlist,name='myadmin_orderlist'),
     url(r'^editorder/$', index_views.editorder,name='myadmin_editorder'),
     url(r'^delorder/$', index_views.delorder,name='myadmin_delorder'),
+
+
+    # 权限管理
+    url(r'^auth/user/add/$', authviews.useradd,name='auth_user_add'),
+    url(r'^auth/user/list/$', authviews.userlist,name='auth_user_list'),
+
+    # 权限组管理
+    url(r'^auth/group/add/$', authviews.groupadd,name='auth_group_add'),
+    url(r'^auth/group/list/$', authviews.grouplist,name='auth_group_list'),
+    url(r'^auth/group/edit/(?P<gid>[0-9]+)$', authviews.groupedit,name='auth_group_edit'),
+
+
+
+
 
 
 
