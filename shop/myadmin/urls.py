@@ -1,6 +1,8 @@
 from django.conf.urls import url
 from django.contrib import admin
 from .views import index_views,user_views,cate_views,goods_views,authviews
+
+# from authviews import *
 urlpatterns = [
     #路由 
     url(r'^$', index_views.index,name='myadmin_index'),
@@ -25,9 +27,9 @@ urlpatterns = [
     url(r'^delgoods/$', goods_views.delgoods,name='myadmin_delgoods'),
     url(r'^editgoods/$', goods_views.editgoods,name='myadmin_editgoods'),
     # 登录 
-    url(r'^login/$', index_views.login,name='myadmin_login'),
+    url(r'^login/$', authviews.mylogin,name='myadmin_login'),
     url(r'^verifycode/$', index_views.verifycode,name='myadmin_yzm'),
-    url(r'^outlogin/$', index_views.outlogin,name='myadmin_out'),
+    url(r'^outlogin/$', authviews.outlogin,name='myadmin_out'),
 
 
     url(r'^order/$', index_views.orderlist,name='myadmin_orderlist'),
@@ -38,11 +40,15 @@ urlpatterns = [
     # 权限管理
     url(r'^auth/user/add/$', authviews.useradd,name='auth_user_add'),
     url(r'^auth/user/list/$', authviews.userlist,name='auth_user_list'),
+    url(r'^auth/user/del/(?P<uid>[0-9]+)$', authviews.userdel,name='auth_user_del'),
+
 
     # 权限组管理
     url(r'^auth/group/add/$', authviews.groupadd,name='auth_group_add'),
     url(r'^auth/group/list/$', authviews.grouplist,name='auth_group_list'),
     url(r'^auth/group/edit/(?P<gid>[0-9]+)$', authviews.groupedit,name='auth_group_edit'),
+
+    # handler403 = "permission_denied"
 
 
 

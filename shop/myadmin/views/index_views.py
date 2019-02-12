@@ -11,27 +11,7 @@ from shop.settings import BASE_DIR
 def index(request):
     return render(request,'myadmin/index.html')
 
-def login(request):
-    if request.method=='GET':
-        return render(request,'myadmin/login.html')
-    elif request.method=='POST':
-        user=request.POST.dict()
-        if user['name']=='admin' and user['pwd']=='123456':
-            if user['yzm'].upper() == request.session['verifycode'].upper():
-                # 用户登陆成功后 将用户信息存入session
-                request.session['adminuser']={'vipuser':user['name'],'uid':1}
-                return HttpResponse('<script>alert("登陆成功");location.href="'+reverse('myadmin_index')+'"</script>')
-            else:
-                return HttpResponse('<script>alert("验证码错误，重新输入");location.href="'+reverse('myadmin_login')+'"</script>')
-        else:
-            return HttpResponse('<script>alert("账号或密码错误");location.href="'+reverse('myadmin_login')+'"</script>')  
 
-def outlogin(request):
-    # 删除session中存的用户信息
-    # request.session['adminuser']={}
-    del request.session['adminuser']
-    # 跳转到登录页面
-    return HttpResponse('<script>alert("退出成功");location.href="'+reverse('myadmin_login')+'"</script>')  
 
 def verifycode(request):
     #引入绘图模块

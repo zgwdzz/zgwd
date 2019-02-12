@@ -5,7 +5,9 @@ from django.core.urlresolvers import reverse
 from .. import models
 import time,os
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import permission_required
 
+@permission_required('myadmin.show_users', raise_exception = True)
 def vipuser(request):
     userinfo=models.Users.objects.all().exclude(status=3)
     
@@ -46,8 +48,7 @@ def vipuser(request):
 
 
 
-
-# 添加
+@permission_required('myadmin.insert_users', raise_exception = True)
 def adduser(request):
     if request.method=='GET':
         return render(request,'myadmin/adduser.html')
@@ -75,8 +76,7 @@ def adduser(request):
 
 
 
-
-# 删除
+@permission_required('myadmin.del_users', raise_exception = True)
 def deluser(request):
     uid=request.GET.get('uid')
     user=models.Users.objects.get(id=uid)
@@ -84,7 +84,8 @@ def deluser(request):
     user.save()
     return redirect(reverse('myadmin_vipuser'))
 
-# 修改信息
+
+@permission_required('myadmin.edit_users' ,raise_exception = True)
 def edituser(request):
     uid=request.GET.get('uid')
     if request.method=='GET':

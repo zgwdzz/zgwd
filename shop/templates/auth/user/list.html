@@ -53,6 +53,8 @@
                                     <th>邮箱</th>
 
                                     <th>级别</th>
+                                    <th>所属组</th>
+
                                     <th>添加时间</th>
                                     <th>操作</th>
                                 </tr>
@@ -76,14 +78,18 @@
                                             <span>超级管理员</span>
                                         {% endif %}
                                     </td>
-                                   
+                                    <td>
+                                        {{i.groups.all|join:','|default:'未分配'}}
+
+                                    </td>
+                                    
                                     <td>{{i.date_joined}}</td>
                                     <td>
                                         <div class="tpl-table-black-operation">
-                                            <a href="{% url 'myadmin_edituser' %}?uid={{i.id}}">
+                                            <a href="{% url 'myadmin_edituser' %}">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
-                                            <a href="{% url 'myadmin_deluser' %}?uid={{i.id}}" class="tpl-table-black-operation-del">
+                                            <a href="{% url 'auth_user_del' i.id %}" class="tpl-table-black-operation-del">
                                                 <i class="am-icon-trash"></i> 删除
                                             </a>
 
